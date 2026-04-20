@@ -1,8 +1,15 @@
-# ESP-Hosted
+# Jetson ESP-Hosted
 
-**ESP-Hosted** is an open-source solution that enables Espressif SoCs/modules (like ESP32) to act as **wireless communication co-processors** for external host systems.
+**Jetson ESP-Hosted** is a Jetson-oriented fork of Espressif's **ESP-Hosted** project. It keeps the upstream multi-variant layout and adds a validated **Jetson Orin Nano SPI host path** for `ESP-Hosted-NG`.
+
+Upstream **ESP-Hosted** enables Espressif SoCs/modules (like ESP32) to act as **wireless communication co-processors** for external host systems.
 
 It allows **host devices** (Linux-based systems or microcontrollers, MCUs) to add Wi-Fi and Bluetooth/BLE capabilities via **standard interfaces** like SPI, SDIO, or UART.
+
+If you are using this fork for the Jetson bring-up path, start here:
+
+* [`esp_hosted_ng/host/README.md`](esp_hosted_ng/host/README.md)
+* [`esp_hosted_ng/docs/jetson_orin_nano_spi.md`](esp_hosted_ng/docs/jetson_orin_nano_spi.md)
 
 
 ### 🔑 Key Features

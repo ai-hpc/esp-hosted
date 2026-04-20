@@ -109,6 +109,50 @@ Example with explicit arguments:
   clockspeed=10
 ```
 
+## Validated Wi-Fi and BLE checks
+
+Once the transport comes up, confirm both the Wi-Fi and Bluetooth host interfaces:
+
+```bash
+ip link show
+nmcli device status
+hciconfig -a
+bluetoothctl list
+```
+
+Expected result on the validated Jetson Orin Nano plus ESP32-C6 flow in this fork:
+
+- `wlan0` appears after the manual ESP reset
+- `nmcli device status` shows `wlan0` as a Wi-Fi device
+- `hci0` appears on `Bus: SPI`
+- `bluetoothctl list` shows the Espressif controller
+
+For ESP32-C6, the Bluetooth path here is **BLE-only**.
+
+Quick BLE discovery check:
+
+```bash
+rfkill list
+bluetoothctl
+```
+
+Inside `bluetoothctl`:
+
+```text
+power on
+scan on
+devices
+show
+```
+
+Expected result:
+
+- discovery starts successfully
+- nearby BLE devices appear in `devices`
+- `show` lists the controller roles and advertising support
+
+You may still see `Can't read local name on hci0: Input/output error (5)` or a BlueZ `Failed to set local name` message. Those did not block BLE scanning on the validated flow here.
+
 ## What changed in the driver
 
 The SPI host path is no longer tied to Raspberry Pi defaults. The module now accepts:

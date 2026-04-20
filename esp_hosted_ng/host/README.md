@@ -164,12 +164,42 @@ Once the transport comes up, confirm the network interface appears:
 ```bash
 ip link show
 nmcli device status
+hciconfig -a
+bluetoothctl list
 ```
 
 Expected result on the validated Jetson flow in this fork:
 
 - `wlan0` appears after the manual ESP reset
 - `nmcli device status` shows `wlan0` as a Wi-Fi device
+- `hci0` appears as a Bluetooth controller on `Bus: SPI`
+- `bluetoothctl list` shows the Espressif controller
+
+For ESP32-C6, the Bluetooth path here is **BLE-only**.
+
+Quick BLE discovery check:
+
+```bash
+rfkill list
+bluetoothctl
+```
+
+Inside `bluetoothctl`:
+
+```text
+power on
+scan on
+devices
+show
+```
+
+Expected result on the validated Jetson flow in this fork:
+
+- `scan on` starts discovery successfully
+- nearby BLE devices appear in `devices`
+- `show` lists the controller roles and advertising support
+
+You may still see `Can't read local name on hci0: Input/output error (5)` or a BlueZ `Failed to set local name` message. Those did not block BLE scanning on the validated flow here.
 
 ## 5. Notes
 
